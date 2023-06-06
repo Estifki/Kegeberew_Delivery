@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kegeberew_delivery/widgets/order/details.dart';
 
 import '../../models/order.dart';
+import '../../screens/order/details.dart';
 
 class MyDeliveriesWidget extends StatelessWidget {
   final OrderData orderData;

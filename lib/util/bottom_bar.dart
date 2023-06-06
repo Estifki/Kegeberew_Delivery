@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:kegeberew_delivery/screens/my_delivery.dart';
+import 'package:kegeberew_delivery/screens/order/my_delivery.dart';
 import 'package:kegeberew_delivery/screens/profile.dart';
 import 'package:provider/provider.dart';
 

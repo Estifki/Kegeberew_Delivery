@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kegeberew_delivery/controller/order.dart';
 import 'package:provider/provider.dart';
 
-import '../controller/auth.dart';
-import '../widgets/order/my_deliveries.dart';
+import '../../controller/auth.dart';
+import '../../widgets/order/my_deliveries.dart';
 
 class MyDeliveryScreen extends StatefulWidget {
   @override
