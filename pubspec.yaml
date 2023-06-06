@@ -30,6 +30,7 @@ dependencies:
   motion_toast: ^2.4.3
   basic_utils: ^5.5.4
   cached_network_image: ^3.2.2
+  intl: ^0.18.1
   
 dev_dependencies:
   flutter_test:

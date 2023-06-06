@@ -30,6 +30,7 @@ class OrderProvider with ChangeNotifier {
         _pendingData.clear();
         final data = orderModelFromJson(response.body);
         _pendingData.addAll(data.data);
+        notifyListeners();
       }
     } catch (_) {}
   }
@@ -47,11 +48,12 @@ class OrderProvider with ChangeNotifier {
         _canceledData.clear();
         final data = orderModelFromJson(response.body);
         _canceledData.addAll(data.data);
+        notifyListeners();
       }
     } catch (_) {}
   }
 
-  Future getOntTheWay({required userID}) async {
+  Future getOnTheWay({required userID}) async {
     String url = "${AppConst.baseurl}/delivery/on-the-way/$userID";
 
     try {
@@ -64,6 +66,7 @@ class OrderProvider with ChangeNotifier {
         _onTheWayData.clear();
         final data = orderModelFromJson(response.body);
         _onTheWayData.addAll(data.data);
+        notifyListeners();
       }
     } catch (_) {}
   }
@@ -81,6 +84,7 @@ class OrderProvider with ChangeNotifier {
         _deliveredData.clear();
         final data = orderModelFromJson(response.body);
         _deliveredData.addAll(data.data);
+        notifyListeners();
       }
     } catch (_) {}
   }
