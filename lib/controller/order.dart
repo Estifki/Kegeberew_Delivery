@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kegeberew_delivery/constant/const.dart';
@@ -106,6 +108,80 @@ class OrderProvider with ChangeNotifier {
         _detailsData.clear();
         final data = orderDetailsModelFromJson(response.body);
         _detailsData.add(data);
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future acceptOrder({required orderID, required userID}) async {
+    String url = "${AppConst.baseurl}/delivery/accept/$userID";
+
+    try {
+      http.Response response = await http.put(Uri.parse(url),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({"order": orderID}));
+
+      print(response.body);
+
+      print(response.statusCode);
+      if (response.statusCode != 200) {
+        //
+        //
+        //
+      } else {
+        getPending(userID: userID);
+        getOnTheWay(userID: userID);
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future cancelOrder({required orderID, required userID}) async {
+    String url = "${AppConst.baseurl}/delivery/cancel/$userID";
+
+    try {
+      http.Response response = await http.put(Uri.parse(url),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({"order": orderID}));
+
+      print(response.body);
+
+      print(response.statusCode);
+      if (response.statusCode != 200) {
+        //
+        //
+        //
+      } else {
+        getPending(userID: userID);
+        getOnTheWay(userID: userID);
+        notifyListeners();
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  Future markAsDeliveredOrder({required orderID, required userID}) async {
+    String url = "${AppConst.baseurl}/delivery/delivered/$userID";
+
+    try {
+      http.Response response = await http.put(Uri.parse(url),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({"order": orderID}));
+
+      print(response.body);
+
+      print(response.statusCode);
+      if (response.statusCode != 200) {
+        //
+        //
+        //
+      } else {
+        getOnTheWay(userID: userID);
+        getDelivered(userID: userID);
+        notifyListeners();
       }
     } catch (_) {
       rethrow;

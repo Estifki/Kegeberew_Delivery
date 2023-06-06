@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kegeberew_delivery/controller/order.dart';
+import 'package:kegeberew_delivery/util/toast.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/auth.dart';
@@ -16,6 +17,8 @@ class OrderDetailsScreen extends StatefulWidget {
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   late Future _detailsData;
   bool _isInit = true;
+
+  bool _isLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -44,7 +47,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               return Center(child: Text("ERror"));
             } else {
               return Consumer<OrderProvider>(builder: (context, value, _) {
-                print(value.detailsData);
                 if (value.detailsData.isEmpty) {
                   return Center(child: Text("No Data"));
                 }
@@ -98,7 +100,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 Text("Shippment Address"),
                                 SizedBox(height: 5),
                                 Text(
-                                    "Name: ${value.detailsData[0].data.user.email}"),
+                                    "Name: ${value.detailsData[0].data.user.firstName}"),
                                 SizedBox(height: 3),
                                 Text(
                                     "Phone: ${value.detailsData[0].data.phoneNo}"),
@@ -113,32 +115,159 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     //Accept Or Cancele Order
                     //
                     SizedBox(height: 25),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: 42,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(10.0)),
-                            child: Text("Accept Order"),
-                          ),
-                          Container(
-                            height: 42,
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(10.0)),
-                            child: Text("Cancel Order"),
-                          ),
-                        ],
-                      ),
-                    ),
+                    value.detailsData[0].data.status == "ONGOING"
+                        ? _isLoading
+                            ? Center(
+                                child: CircularProgressIndicator.adaptive())
+                            : GestureDetector(
+                                onTap: () {
+                                  try {
+                                    setState(() {
+                                      _isLoading = true;
+                                    });
+                                    value
+                                        .markAsDeliveredOrder(
+                                            orderID: widget.orderCode,
+                                            userID: Provider.of<AuthProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .userID!)
+                                        .then((_) {
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+                                      Navigator.of(context).pop();
+                                      showSuccessMessage(250, context,
+                                          "Product Delivered Success");
+                                    });
+                                  } catch (_) {
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 25.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        height: 42,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.4,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        child: Text("Mark as delivered"),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                        : value.detailsData[0].data.status == "PENDING"
+                            ? _isLoading
+                                ? Center(
+                                    child: CircularProgressIndicator.adaptive())
+                                : GestureDetector(
+                                    onTap: () {
+                                      try {
+                                        setState(() {
+                                          _isLoading = true;
+                                        });
+                                        value
+                                            .acceptOrder(
+                                                orderID: widget.orderCode,
+                                                userID:
+                                                    Provider.of<AuthProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .userID!)
+                                            .then((_) {
+                                          setState(() {
+                                            _isLoading = false;
+                                          });
+                                          Navigator.of(context).pop();
+                                          showSuccessMessage(250, context,
+                                              "Product Accepted Success");
+                                        });
+                                      } catch (_) {
+                                        _isLoading = false;
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 25.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            height: 42,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.4,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                color: Colors.green,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            child: Text("Accept Order"),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              try {
+                                                setState(() {
+                                                  _isLoading = true;
+                                                });
+                                                value
+                                                    .cancelOrder(
+                                                        orderID:
+                                                            widget.orderCode,
+                                                        userID: Provider.of<
+                                                                    AuthProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .userID!)
+                                                    .then((_) {
+                                                  setState(() {
+                                                    _isLoading = false;
+                                                  });
+                                                  Navigator.of(context).pop();
+                                                  showSuccessMessage(
+                                                      250,
+                                                      context,
+                                                      "Product Cancled Success");
+                                                });
+                                              } catch (_) {
+                                                _isLoading = false;
+                                              }
+                                            },
+                                            child: Container(
+                                              height: 42,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.4,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0)),
+                                              child: Text("Cancel Order"),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                            : Container(),
                     SizedBox(height: 25),
                     Center(child: Text("Ordered Products")),
                     SizedBox(height: 25),
@@ -152,22 +281,94 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         ),
                         child: ListView.builder(
                           shrinkWrap: true,
-                          padding: EdgeInsets.only(
-                              left: 15, right: 15, top: 20, bottom: 20),
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 20),
                           itemCount: value.detailsData[0].data.products.length,
                           itemBuilder: (context, index) {
                             return Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                SizedBox(height: 5),
                                 Text(value.detailsData[0].data.products[index]
-                                    .product.name)
+                                    .product.name),
+                                SizedBox(height: 3),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Quntity"),
+                                        Text(
+                                            "x${value.detailsData[0].data.products[index].quantity.toString()}")
+                                      ],
+                                    ),
+                                    Text(
+                                        "Br ${(value.detailsData[0].data.products[index].quantity * value.detailsData[0].data.products[index].product.price)}"
+                                            .toString())
+                                  ],
+                                ),
+                                SizedBox(height: 5)
                               ],
                             );
                           },
                         ),
                       ),
-                    )
+                    ),
+                    SizedBox(height: 40),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Sub Total"),
+                              Text(
+                                  "Br ${value.detailsData[0].data.totalPrice.toString()}"),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Tax"),
+                              Text(
+                                  ("Br ${value.detailsData[0].data.totalPrice * 0.15}")
+                                      .toString()),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Service charge"),
+                              Text(
+                                  ("Br ${value.detailsData[0].data.totalPrice * 0.1}")
+                                      .toString()),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Grand Total"),
+                                Text(
+                                  "Br ${((value.detailsData[0].data.totalPrice * 0.25) + value.detailsData[0].data.totalPrice).toString()}",
+                                )
+                              ]),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 40),
                   ],
                 ));
               });

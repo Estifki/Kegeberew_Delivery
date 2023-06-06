@@ -52,7 +52,7 @@ class MyDeliveriesWidget extends StatelessWidget {
               Positioned(
                   right: 15.0,
                   child: Text(
-                    "br ${orderData.totalPrice.toString()}",
+                    "Br ${((orderData.totalPrice * 0.25) + orderData.totalPrice).toString()}",
                     style: TextStyle(color: color),
                   ))
             ]),
