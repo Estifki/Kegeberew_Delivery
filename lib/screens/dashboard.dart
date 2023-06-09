@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kegeberew_delivery/controller/auth.dart';
 import 'package:kegeberew_delivery/controller/dashboard.dart';
+import 'package:kegeberew_delivery/controller/notification.dart';
 import 'package:kegeberew_delivery/util/app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
           .getDashbord(
               userID:
                   Provider.of<AuthProvider>(context, listen: false).userID!);
+      Provider.of<NotificationProvider>(context, listen: false).getNotification(
+          context, Provider.of<AuthProvider>(context, listen: false).userID!);
       _isInit = false;
     }
     super.didChangeDependencies();
