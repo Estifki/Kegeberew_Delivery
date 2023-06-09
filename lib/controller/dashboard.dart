@@ -7,6 +7,10 @@ class DashboardProvider with ChangeNotifier {
   List<DashboardData> _dashboardData = [];
   List<DashboardData> get dashboardData => [..._dashboardData];
 
+  void clearDashboard() {
+    _dashboardData.clear();
+  }
+
   Future getDashbord({required userID}) async {
     String url = "${AppConst.baseurl}/delivery/dashboard/$userID";
 

@@ -121,12 +121,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 15),
+                // const SizedBox(height: 15),
                 //
                 //Forget Password
                 //
-                const Text("Forget Password?",
-                    style: TextStyle(color: Colors.green)),
+                // const Text("Forget Password?",
+                //     style: TextStyle(color: Colors.green)),
                 const SizedBox(height: 30),
                 //
                 //Login Button
@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: screenSize.width,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.0),
+                          borderRadius: BorderRadius.circular(50.0),
                           gradient: LinearGradient(
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
@@ -162,17 +162,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 //
                 //
                 SizedBox(height: screenSize.height * 0.1),
-                Center(
-                    child: RichText(
-                        text: const TextSpan(
-                            text: "Don't Have An Account?",
-                            style: TextStyle(color: Colors.white),
-                            children: [
-                      TextSpan(
-                        text: " Sign Up",
-                        style: TextStyle(color: Colors.green),
-                      )
-                    ]))),
+                // Center(
+                //     child: RichText(
+                //         text: const TextSpan(
+                //             text: "Don't Have An Account?",
+                //             style: TextStyle(color: Colors.white),
+                //             children: [
+                //       TextSpan(
+                //         text: " Sign Up",
+                //         style: TextStyle(color: Colors.green),
+                //       )
+                //     ]))),
                 // SizedBox(height: 20)
               ]),
         ),
@@ -217,13 +217,13 @@ class _LoginScreenState extends State<LoginScreen> {
         });
       } on CustomException catch (e) {
         showErrorMessage(
-            width: 200, context: context, errorMessage: e.toString());
+            width: 250, context: context, errorMessage: e.toString());
         setState(() {
           _isLoading = false;
         });
       } catch (_) {
         showErrorMessage(
-            width: 200, context: context, errorMessage: "Unknown Error");
+            width: 250, context: context, errorMessage: "Unknown Error");
         setState(() {
           _isLoading = false;
         });

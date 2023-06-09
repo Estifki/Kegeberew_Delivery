@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../models/order.dart';
+import '../../models/order/order.dart';
 import '../../screens/order/details.dart';
 
 class MyDeliveriesWidget extends StatelessWidget {

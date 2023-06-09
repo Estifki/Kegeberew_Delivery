@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:kegeberew_delivery/controller/auth.dart';
 import 'package:kegeberew_delivery/controller/dashboard.dart';
 import 'package:kegeberew_delivery/controller/notification.dart';
+import 'package:kegeberew_delivery/screens/canceled.dart';
 import 'package:kegeberew_delivery/util/app_bar.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class DashBoardScreen extends StatefulWidget {
+  const DashBoardScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DashBoardScreenState extends State<DashBoardScreen> {
   bool _isInit = true;
   late Future _dashBoardData;
 
@@ -86,11 +87,16 @@ class DashboardWidget extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                HomePageCounterWidget(
-                    title: "Canceled Delivery",
-                    count: value.dashboardData[0].canceledOrders.toString(),
-                    icon: Icons.card_travel_outlined,
-                    color: Colors.red),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CanceledDeliveriesScreen(),
+                  )),
+                  child: HomePageCounterWidget(
+                      title: "Canceled Delivery",
+                      count: value.dashboardData[0].canceledOrders.toString(),
+                      icon: Icons.card_travel_outlined,
+                      color: Colors.red),
+                ),
                 const SizedBox(width: 30),
                 Container(
                     height: 120, width: MediaQuery.of(context).size.width * 0.4)

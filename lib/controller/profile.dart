@@ -8,6 +8,10 @@ class ProfileProvider with ChangeNotifier {
 
   List<UserData> get userData => [..._userData];
 
+  void clearProfile() {
+    _userData.clear();
+  }
+
   Future getProfile({required String userID}) async {
     String url = "${AppConst.baseurl}/user/profile/$userID";
     try {

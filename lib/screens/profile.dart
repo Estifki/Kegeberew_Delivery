@@ -1,9 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kegeberew_delivery/controller/auth.dart';
+import 'package:kegeberew_delivery/controller/dashboard.dart';
+import 'package:kegeberew_delivery/controller/notification.dart';
+import 'package:kegeberew_delivery/controller/order.dart';
 import 'package:kegeberew_delivery/controller/profile.dart';
+import 'package:kegeberew_delivery/screens/login.dart';
+import 'package:kegeberew_delivery/screens/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:basic_utils/basic_utils.dart' as st;
+
+import '../util/bottom_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -99,41 +106,53 @@ class ProfileWidget extends StatelessWidget {
                 )),
 
                 const SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 45,
-                      width: 45,
-                      margin: const EdgeInsets.only(left: 10),
-                      decoration: BoxDecoration(
-                          color: Colors.green.withOpacity(0.3),
-                          shape: BoxShape.circle),
-                      child: const Icon(Icons.notification_important_outlined,
-                          size: 22),
-                    ),
-                    const SizedBox(width: 20),
-                    const Text(
-                      "Notifaction",
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => NotificationScreen(),
+                    ));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 45,
+                        margin: const EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.green.withOpacity(0.3),
+                            shape: BoxShape.circle),
+                        child: const Icon(Icons.notification_important_outlined,
+                            size: 22),
+                      ),
+                      const SizedBox(width: 20),
+                      const Text(
+                        "Notification",
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 15),
 
                 const SizedBox(height: 15),
                 GestureDetector(
-                  // onTap: () {
-                  //   Provider.of<AuthProvider>(context,
-                  //           listen: false)
-                  //       .signOut();
-                  //   Provider.of<BottomBarIndexProvider>(context,
-                  //           listen: false)
-                  //       .ontap(0);
-                  //   Navigator.of(context).push(
-                  //       MaterialPageRoute(
-                  //           builder: (context) =>
-                  //               const CustomBottomBar()));
-                  // },
+                  onTap: () {
+                    Provider.of<AuthProvider>(context, listen: false).signOut();
+                    Provider.of<OrderProvider>(context, listen: false)
+                        .clearOrders();
+                    Provider.of<NotificationProvider>(context, listen: false)
+                        .cleanNotofication();
+                    Provider.of<DashboardProvider>(context, listen: false)
+                        .clearDashboard();
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .clearProfile();
+                    Provider.of<BottomBarProvider>(context, listen: false)
+                        .resetIndex();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                        (route) => false);
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,

@@ -3,15 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kegeberew_delivery/constant/const.dart';
-import 'package:kegeberew_delivery/models/order.dart';
-import 'package:kegeberew_delivery/models/order_details.dart';
+import 'package:kegeberew_delivery/models/order/canceled.dart';
+import 'package:kegeberew_delivery/models/order/order.dart';
+import 'package:kegeberew_delivery/models/order/order_details.dart';
 
 class OrderProvider with ChangeNotifier {
   List<OrderData> _pendingData = [];
   List<OrderData> get pendingData => [..._pendingData];
 
-  List<OrderData> _canceledData = [];
-  List<OrderData> get canceledData => [..._canceledData];
+  List<CanceledOrderData> _canceledData = [];
+  List<CanceledOrderData> get canceledData => [..._canceledData];
 
   List<OrderData> _onTheWayData = [];
   List<OrderData> get onTheWayData => [..._onTheWayData];
@@ -21,6 +22,13 @@ class OrderProvider with ChangeNotifier {
 
   List<OrderDetailsModel> _detailsData = [];
   List<OrderDetailsModel> get detailsData => [..._detailsData];
+
+  void clearOrders() {
+    _pendingData.clear();
+    _onTheWayData.clear();
+    _deliveredData.clear();
+    _canceledData.clear();
+  }
 
   Future getPending({required userID}) async {
     String url = "${AppConst.baseurl}/delivery/pending/$userID";
@@ -51,7 +59,8 @@ class OrderProvider with ChangeNotifier {
         //
       } else {
         _canceledData.clear();
-        final data = orderModelFromJson(response.body);
+        final data = canceledModelFromJson(response.body);
+
         _canceledData.addAll(data.data);
         notifyListeners();
       }

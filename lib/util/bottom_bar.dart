@@ -16,7 +16,7 @@ class CustomBottomBar extends StatefulWidget {
 
 class _CustomBottomBarState extends State<CustomBottomBar> {
   List<Widget> _screen = [
-    HomeScreen(),
+    DashBoardScreen(),
     MyDeliveryScreen(),
     ProfileScreen(),
   ];

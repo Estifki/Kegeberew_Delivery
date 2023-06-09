@@ -9,7 +9,7 @@ showErrorMessage(
   return MotionToast.error(
     width: width,
 
-    height: 40,
+    height: 70,
     iconSize: 0.0,
     padding: const EdgeInsets.only(top: 10),
     // title: const Text(
@@ -34,7 +34,7 @@ showErrorMessage(
 showSuccessMessage(double width, BuildContext context, String successMessage) {
   return MotionToast.success(
     width: width,
-    height: 40,
+    height: 70,
     iconSize: 0.0,
     padding: const EdgeInsets.only(top: 10),
     // title: const Text(

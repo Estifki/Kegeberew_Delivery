@@ -1,28 +1,28 @@
 // To parse this JSON data, do
 //
-//     final orderModel = orderModelFromJson(jsonString);
+//     final canceledModel = canceledModelFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-OrderModel orderModelFromJson(String str) =>
-    OrderModel.fromJson(json.decode(str));
+CanceledModel canceledModelFromJson(String str) =>
+    CanceledModel.fromJson(json.decode(str));
 
-String orderModelToJson(OrderModel data) => json.encode(data.toJson());
+String canceledModelToJson(CanceledModel data) => json.encode(data.toJson());
 
-class OrderModel {
+class CanceledModel {
   String message;
-  List<OrderData> data;
+  List<CanceledOrderData> data;
 
-  OrderModel({
+  CanceledModel({
     required this.message,
     required this.data,
   });
 
-  factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
+  factory CanceledModel.fromJson(Map<String, dynamic> json) => CanceledModel(
         message: json["message"],
-        data: List<OrderData>.from(
-            json["data"].map((x) => OrderData.fromJson(x))),
+        data: List<CanceledOrderData>.from(
+            json["data"].map((x) => CanceledOrderData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,7 +31,44 @@ class OrderModel {
       };
 }
 
-class OrderData {
+class CanceledOrderData {
+  String id;
+  Order order;
+  String user;
+  DateTime createdAt;
+  DateTime updatedAt;
+  int v;
+
+  CanceledOrderData({
+    required this.id,
+    required this.order,
+    required this.user,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.v,
+  });
+
+  factory CanceledOrderData.fromJson(Map<String, dynamic> json) =>
+      CanceledOrderData(
+        id: json["_id"],
+        order: Order.fromJson(json["order"]),
+        user: json["user"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+        v: json["__v"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "order": order.toJson(),
+        "user": user,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
+        "__v": v,
+      };
+}
+
+class Order {
   String id;
   String user;
   bool inMainWareHouse;
@@ -41,14 +78,15 @@ class OrderData {
   Address address;
   String deliveryTime;
   String status;
-  String deliveryMan;
+  dynamic deliveryMan;
   String shippingType;
   String paymentMethod;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
+  dynamic branch;
 
-  OrderData({
+  Order({
     required this.id,
     required this.user,
     required this.inMainWareHouse,
@@ -64,9 +102,10 @@ class OrderData {
     required this.createdAt,
     required this.updatedAt,
     required this.v,
+    required this.branch,
   });
 
-  factory OrderData.fromJson(Map<String, dynamic> json) => OrderData(
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["_id"],
         user: json["user"],
         inMainWareHouse: json["inMainWareHouse"],
@@ -83,6 +122,7 @@ class OrderData {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
+        branch: json["branch"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -101,6 +141,7 @@ class OrderData {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
+        "branch": branch,
       };
 }
 

@@ -14,6 +14,12 @@ class NotificationProvider with ChangeNotifier {
   List<NotificationData> get notificationData => [..._notificationData];
   int _newNotification = 0;
   int get newNotification => _newNotification;
+
+  void cleanNotofication() {
+    _notificationData.clear();
+    _newNotification = 0;
+  }
+
   Future getNotification(BuildContext context, String userID) async {
     var url = "${AppConst.baseurl}/notification/find/$userID";
     try {
