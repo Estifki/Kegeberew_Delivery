@@ -14,7 +14,13 @@ class MyDeliveriesWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => OrderDetailsScreen(orderCode: orderData.id),
+          builder: (context) => OrderDetailsScreen(
+            orderCode: orderData.id,
+            sourceLat: orderData.location.coordinates[1],
+            sourceLong: orderData.location.coordinates[0],
+            destinationLat: orderData.address.location[0],
+            destinationLong: orderData.address.location[1],
+          ),
         ));
       },
       child: Padding(

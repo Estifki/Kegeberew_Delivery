@@ -1,5 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:kegeberew_delivery/constant/const.dart';
 import 'package:kegeberew_delivery/controller/order.dart';
 import 'package:kegeberew_delivery/util/toast.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +13,19 @@ import '../../controller/auth.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final String orderCode;
-  OrderDetailsScreen({required this.orderCode});
+  final double sourceLat;
+
+  final double sourceLong;
+
+  final double destinationLat;
+
+  final double destinationLong;
+  OrderDetailsScreen(
+      {required this.orderCode,
+      required this.sourceLat,
+      required this.sourceLong,
+      required this.destinationLat,
+      required this.destinationLong});
 
   @override
   State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
@@ -23,11 +40,32 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
+      getPolyPoints();
       _detailsData = Provider.of<OrderProvider>(context, listen: false)
           .getOrderDetails(orderID: widget.orderCode);
       _isInit = false;
     }
     super.didChangeDependencies();
+  }
+
+  List<LatLng> polyLineCoordinate = [];
+
+  void getPolyPoints() async {
+    PolylinePoints polylinePoints = PolylinePoints();
+
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        "AIzaSyDXGVyh9MTUKU38syRDuzyWD0SBmUFkp2M",
+        PointLatLng(widget.sourceLat, widget.sourceLong),
+        PointLatLng(widget.destinationLat, widget.destinationLong));
+    if (result.points.isNotEmpty) {
+      print("not not not");
+      for (var points in result.points) {
+        polyLineCoordinate.add(LatLng(points.latitude, points.longitude));
+      }
+    } else {
+      print(result.points);
+    }
+    setState(() {});
   }
 
   @override
@@ -47,6 +85,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               return Center(child: Text("ERror"));
             } else {
               return Consumer<OrderProvider>(builder: (context, value, _) {
+                // LatLng sourceLocation = LatLng(
+                //     value.detailsData[0].location.coordinates[1],
+                //     value.detailsData[0].location.coordinates[0]);
+                // LatLng destinationLocation = LatLng(
+                //     value.detailsData[0].location.coordinates[0],
+                //     value.detailsData[0].location.coordinates[1]);
+
                 if (value.detailsData.isEmpty) {
                   return Center(child: Text("No Data"));
                 }
@@ -268,6 +313,50 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     ),
                                   )
                             : Container(),
+                    SizedBox(height: 25),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Container(
+                        height: 170,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: GoogleMap(
+                            // mapType: MapType.satellite,
+                            myLocationButtonEnabled: true,
+                            indoorViewEnabled: true,
+                            // trafficEnabled: true,
+                            // liteModeEnabled: true,
+                            myLocationEnabled: true,
+                            initialCameraPosition: CameraPosition(
+                                target:
+                                    LatLng(widget.sourceLat, widget.sourceLong),
+                                zoom: 10),
+                            markers: {
+                              Marker(
+                                  markerId: MarkerId("source"),
+                                  position: LatLng(
+                                      widget.sourceLat, widget.sourceLong)),
+                              Marker(
+                                  markerId: MarkerId("destination"),
+                                  position: LatLng(widget.destinationLat,
+                                      widget.destinationLong)),
+                            },
+                            polylines: {
+                              Polyline(
+                                  polylineId: const PolylineId("Route"),
+                                  points: polyLineCoordinate,
+                                  color: Colors.red.shade300,
+                                  width: 5)
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 25),
                     Center(child: Text("Ordered Products")),
                     SizedBox(height: 25),

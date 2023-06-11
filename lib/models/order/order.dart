@@ -34,19 +34,20 @@ class OrderModel {
 class OrderData {
   String id;
   String user;
-  dynamic inMainWareHouse;
+  bool inMainWareHouse;
   String phoneNo;
   List<Product> products;
   int totalPrice;
   Address address;
   String deliveryTime;
   String status;
-  String deliveryMan;
   String shippingType;
   String paymentMethod;
   DateTime createdAt;
   DateTime updatedAt;
   int v;
+  String deliveryMan;
+  Location location;
 
   OrderData({
     required this.id,
@@ -58,12 +59,13 @@ class OrderData {
     required this.address,
     required this.deliveryTime,
     required this.status,
-    required this.deliveryMan,
     required this.shippingType,
     required this.paymentMethod,
     required this.createdAt,
     required this.updatedAt,
     required this.v,
+    required this.deliveryMan,
+    required this.location,
   });
 
   factory OrderData.fromJson(Map<String, dynamic> json) => OrderData(
@@ -77,12 +79,13 @@ class OrderData {
         address: Address.fromJson(json["address"]),
         deliveryTime: json["deliveryTime"],
         status: json["status"],
-        deliveryMan: json["deliveryMan"],
         shippingType: json["shippingType"],
         paymentMethod: json["paymentMethod"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
+        deliveryMan: json["deliveryMan"],
+        location: Location.fromJson(json["location"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -95,12 +98,13 @@ class OrderData {
         "address": address.toJson(),
         "deliveryTime": deliveryTime,
         "status": status,
-        "deliveryMan": deliveryMan,
         "shippingType": shippingType,
         "paymentMethod": paymentMethod,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
+        "deliveryMan": deliveryMan,
+        "location": location.toJson(),
       };
 }
 
@@ -125,6 +129,27 @@ class Address {
         "location": List<dynamic>.from(location.map((x) => x)),
         "address": address,
         "_id": id,
+      };
+}
+
+class Location {
+  String type;
+  List<double> coordinates;
+
+  Location({
+    required this.type,
+    required this.coordinates,
+  });
+
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
+        type: json["type"],
+        coordinates:
+            List<double>.from(json["coordinates"].map((x) => x?.toDouble())),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": type,
+        "coordinates": List<dynamic>.from(coordinates.map((x) => x)),
       };
 }
 
