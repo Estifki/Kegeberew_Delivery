@@ -7,6 +7,7 @@ import 'package:kegeberew_delivery/controller/order.dart';
 import 'package:kegeberew_delivery/controller/profile.dart';
 import 'package:kegeberew_delivery/screens/login.dart';
 import 'package:kegeberew_delivery/screens/notification.dart';
+import 'package:kegeberew_delivery/screens/update_password.dart';
 import 'package:provider/provider.dart';
 import 'package:basic_utils/basic_utils.dart' as st;
 
@@ -133,7 +134,31 @@ class ProfileWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 15),
-
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => UpdatePassword(),
+                    ));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 45,
+                        margin: const EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.green.withOpacity(0.3),
+                            shape: BoxShape.circle),
+                        child: const Icon(Icons.system_update, size: 22),
+                      ),
+                      const SizedBox(width: 20),
+                      const Text(
+                        "Update Password",
+                      ),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 15),
                 GestureDetector(
                   onTap: () {

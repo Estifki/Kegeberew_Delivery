@@ -31,7 +31,10 @@ showErrorMessage(
   ).show(context);
 }
 
-showSuccessMessage(double width, BuildContext context, String successMessage) {
+showSuccessMessage(
+    {required double width,
+    required BuildContext context,
+    required String successMessage}) {
   return MotionToast.success(
     width: width,
     height: 70,

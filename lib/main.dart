@@ -6,6 +6,8 @@ import 'package:kegeberew_delivery/controller/dashboard.dart';
 import 'package:kegeberew_delivery/controller/notification.dart';
 import 'package:kegeberew_delivery/controller/order.dart';
 import 'package:kegeberew_delivery/util/bottom_bar.dart';
+import 'package:kegeberew_delivery/util/loading.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/auth.dart';
@@ -35,16 +37,23 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Consumer<AuthProvider>(builder: (context, value, _) {
-          if (value.userID == null) {
-            return const LoginScreen();
-          } else {
-            return const CustomBottomBar();
-          }
-        }),
-        theme: ThemeData.dark(),
+      child: GlobalLoaderOverlay(
+      useDefaultLoading: false,
+      overlayColor: Colors.black,
+      overlayOpacity: 0.4,
+      duration: Duration(milliseconds: 400),
+      overlayWidget: Center(child: CustomLoadingWidget()),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Consumer<AuthProvider>(builder: (context, value, _) {
+            if (value.userID == null) {
+              return const LoginScreen();
+            } else {
+              return const CustomBottomBar();
+            }
+          }),
+          theme: ThemeData.dark(),
+        ),
       ),
     );
   }

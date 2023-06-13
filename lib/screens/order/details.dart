@@ -10,6 +10,7 @@ import 'package:kegeberew_delivery/util/toast.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/auth.dart';
+import '../../util/google_maps.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final String orderCode;
@@ -70,6 +71,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.destinationLong);
     return Scaffold(
       appBar: AppBar(
         title: Text("Order Details"),
@@ -182,8 +184,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                         _isLoading = false;
                                       });
                                       Navigator.of(context).pop();
-                                      showSuccessMessage(250, context,
-                                          "Product Delivered Success");
+                                      showSuccessMessage(
+                                          width: 250,
+                                          context: context,
+                                          successMessage:
+                                              "Product Delivered Success");
                                     });
                                   } catch (_) {
                                     setState(() {
@@ -236,8 +241,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                             _isLoading = false;
                                           });
                                           Navigator.of(context).pop();
-                                          showSuccessMessage(250, context,
-                                              "Product Accepted Success");
+                                          showSuccessMessage(
+                                              width: 250,
+                                              context: context,
+                                              successMessage:
+                                                  "Product Accepted Success");
                                         });
                                       } catch (_) {
                                         _isLoading = false;
@@ -285,9 +293,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                   });
                                                   Navigator.of(context).pop();
                                                   showSuccessMessage(
-                                                      250,
-                                                      context,
-                                                      "Product Cancled Success");
+                                                      width: 250,
+                                                      context: context,
+                                                      successMessage:
+                                                          "Product Cancled Success");
                                                 });
                                               } catch (_) {
                                                 _isLoading = false;
@@ -357,9 +366,35 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 25),
-                    Center(child: Text("Ordered Products")),
-                    SizedBox(height: 25),
+                    const SizedBox(height: 25),
+
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Scaffold(
+                          body: SafeArea(
+                            child: Stack(children: [
+                              GoogleMapsFullScreen(
+                                sourceLat: widget.sourceLat,
+                                sourceLong: widget.sourceLong,
+                                destinationLat: widget.destinationLat,
+                                destinationLong: widget.destinationLong,
+                              ),
+                              Positioned(
+                                top: MediaQuery.of(context).size.height * 0.015,
+                                left: MediaQuery.of(context).size.width * 0.05,
+                                child: _navigatorPop(context),
+                              ),
+                            ]),
+                          ),
+                        ),
+                      )),
+                      child: const Center(
+                          child: Text(
+                        "View  Full-map",
+                        style: TextStyle(fontSize: 17, color: Colors.red),
+                      )),
+                    ),
+                    const SizedBox(height: 25),
                     Padding(
                       padding: const EdgeInsets.only(left: 25.0, right: 25),
                       child: Container(
@@ -464,6 +499,23 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
             }
           }
         },
+      ),
+    );
+  }
+
+  _navigatorPop(BuildContext context) {
+    return Container(
+      height: 40,
+      width: 40,
+      decoration:
+          BoxDecoration(shape: BoxShape.circle, color: Colors.grey.shade100),
+      child: IconButton(
+        onPressed: () => Navigator.pop(context),
+        icon: const Icon(
+          Icons.arrow_back_ios_new,
+          color: Colors.black,
+          size: 19,
+        ),
       ),
     );
   }

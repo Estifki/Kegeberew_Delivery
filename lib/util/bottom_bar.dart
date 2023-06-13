@@ -47,9 +47,10 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.home_filled), label: "Dashboard"),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.home_filled), label: "My Delivery"),
+                    icon: Icon(Icons.delivery_dining_sharp),
+                    label: "My Delivery"),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.home_filled), label: "Profile"),
+                    icon: Icon(Icons.person), label: "Profile"),
               ]),
         ));
   }
