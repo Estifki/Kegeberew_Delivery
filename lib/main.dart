@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kegeberew_delivery/controller/dashboard.dart';
-import 'package:kegeberew_delivery/controller/notification.dart';
-import 'package:kegeberew_delivery/controller/order.dart';
-import 'package:kegeberew_delivery/util/bottom_bar.dart';
-import 'package:kegeberew_delivery/util/loading.dart';
+import 'controller/dashboard.dart';
+import 'controller/notification.dart';
+import 'controller/order.dart';
+import 'util/bottom_bar.dart';
+import 'util/loading.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 

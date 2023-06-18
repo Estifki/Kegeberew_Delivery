@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:kegeberew_delivery/constant/const.dart';
-import 'package:kegeberew_delivery/models/dashboard.dart';
+import '../constant/const.dart';
+import '../models/dashboard.dart';
 
 class DashboardProvider with ChangeNotifier {
   List<DashboardData> _dashboardData = [];

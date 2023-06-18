@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kegeberew_delivery/controller/order.dart';
+import '../../controller/order.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/auth.dart';

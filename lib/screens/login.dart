@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kegeberew_delivery/util/custom_exception.dart';
+import '../util/custom_exception.dart';
 import 'package:provider/provider.dart';
 
 import '../constant/const.dart';

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:kegeberew_delivery/constant/const.dart';
-import 'package:kegeberew_delivery/controller/order.dart';
-import 'package:kegeberew_delivery/util/toast.dart';
+import '../../constant/const.dart';
+import '../../controller/order.dart';
+import '../../util/toast.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/auth.dart';

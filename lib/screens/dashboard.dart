@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kegeberew_delivery/controller/auth.dart';
-import 'package:kegeberew_delivery/controller/dashboard.dart';
-import 'package:kegeberew_delivery/controller/notification.dart';
-import 'package:kegeberew_delivery/screens/canceled.dart';
-import 'package:kegeberew_delivery/util/app_bar.dart';
+import '../controller/auth.dart';
+import '../controller/dashboard.dart';
+import '../controller/notification.dart';
+import 'canceled.dart';
+import '../util/app_bar.dart';
 import 'package:provider/provider.dart';
 
 class DashBoardScreen extends StatefulWidget {

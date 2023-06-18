@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:kegeberew_delivery/util/toast.dart';
+import '../util/toast.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 

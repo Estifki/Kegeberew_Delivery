@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kegeberew_delivery/constant/const.dart';
+import '../constant/const.dart';
 import 'package:provider/provider.dart';
 
 import '../controller/notification.dart';

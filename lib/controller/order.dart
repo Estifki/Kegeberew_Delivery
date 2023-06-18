@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:kegeberew_delivery/constant/const.dart';
-import 'package:kegeberew_delivery/models/order/canceled.dart';
-import 'package:kegeberew_delivery/models/order/order.dart';
-import 'package:kegeberew_delivery/models/order/order_details.dart';
+import '../constant/const.dart';
+import '../models/order/canceled.dart';
+import '../models/order/order.dart';
+import '../models/order/order_details.dart';
 
 class OrderProvider with ChangeNotifier {
   List<OrderData> _pendingData = [];

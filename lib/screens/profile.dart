@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:kegeberew_delivery/controller/auth.dart';
-import 'package:kegeberew_delivery/controller/dashboard.dart';
-import 'package:kegeberew_delivery/controller/notification.dart';
-import 'package:kegeberew_delivery/controller/order.dart';
-import 'package:kegeberew_delivery/controller/profile.dart';
-import 'package:kegeberew_delivery/screens/login.dart';
-import 'package:kegeberew_delivery/screens/notification.dart';
-import 'package:kegeberew_delivery/screens/update_password.dart';
+import '../controller/auth.dart';
+import '../controller/dashboard.dart';
+import '../controller/notification.dart';
+import '../controller/order.dart';
+import '../controller/profile.dart';
+import 'login.dart';
+import 'notification.dart';
+import 'update_password.dart';
 import 'package:provider/provider.dart';
 import 'package:basic_utils/basic_utils.dart' as st;
 

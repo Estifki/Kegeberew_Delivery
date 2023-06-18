@@ -1,8 +1,8 @@
 import 'package:basic_utils/basic_utils.dart' as st;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:kegeberew_delivery/util/custom_exception.dart';
-import 'package:kegeberew_delivery/util/toast.dart';
+import '../util/custom_exception.dart';
+import '../util/toast.dart';
 import 'package:provider/provider.dart';
 import 'package:jiffy/jiffy.dart';
 import '../controller/auth.dart';
