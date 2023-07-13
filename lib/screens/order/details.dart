@@ -449,48 +449,48 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Sub Total"),
-                              Text(
-                                  "Br ${value.detailsData[0].data.totalPrice.toString()}"),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Tax"),
-                              Text(
-                                  ("Br ${value.detailsData[0].data.totalPrice * 0.15}")
-                                      .toString()),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Service charge"),
-                              Text(
-                                  ("Br ${value.detailsData[0].data.totalPrice * 0.1}")
-                                      .toString()),
-                            ],
-                          ),
-                          SizedBox(height: 10),
-                          Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Grand Total"),
+                                Text("Sub Total"),
                                 Text(
-                                  "Br ${((value.detailsData[0].data.totalPrice * 0.25) + value.detailsData[0].data.totalPrice).toString()}",
-                                )
-                              ]),
-                        ],
-                      ),
+                                    "Br ${value.detailsData[0].data.totalPrice.toString()}"),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Tax"),
+                                  Text(
+                                      ("Br ${value.detailsData[0].data.totalPrice * 0.15}")
+                                          .toString()),
+                                ]),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Service charge"),
+                                Text(
+                                    "Br ${value.detailsData[0].data.totalPrice * 0.1}"
+                                        .toString()),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Grand Total"),
+                                  Text(
+                                    "Br ${((value.detailsData[0].data.totalPrice * 0.25) + value.detailsData[0].data.totalPrice).toStringAsFixed(2)}",
+                                  )
+                                ]),
+                          ]),
                     ),
                     SizedBox(height: 40),
                   ],

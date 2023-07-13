@@ -38,11 +38,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: GlobalLoaderOverlay(
-      useDefaultLoading: false,
-      overlayColor: Colors.black,
-      overlayOpacity: 0.4,
-      duration: Duration(milliseconds: 400),
-      overlayWidget: Center(child: CustomLoadingWidget()),
+        useDefaultLoading: false,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.4,
+        duration: Duration(milliseconds: 400),
+        overlayWidget: Center(child: CustomLoadingWidget()),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: Consumer<AuthProvider>(builder: (context, value, _) {

@@ -37,7 +37,7 @@ class OrderData {
   bool inMainWareHouse;
   String phoneNo;
   List<Product> products;
-  int totalPrice;
+  dynamic totalPrice;
   Address address;
   String deliveryTime;
   String status;

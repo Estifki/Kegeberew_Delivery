@@ -35,6 +35,7 @@ class OrderProvider with ChangeNotifier {
 
     try {
       http.Response response = await http.get(Uri.parse(url));
+      print(response.statusCode);
       if (response.statusCode != 200) {
         //
         //
@@ -42,6 +43,7 @@ class OrderProvider with ChangeNotifier {
       } else {
         _pendingData.clear();
         final data = orderModelFromJson(response.body);
+        print("Data ${data.data.length}");
         _pendingData.addAll(data.data);
         notifyListeners();
       }

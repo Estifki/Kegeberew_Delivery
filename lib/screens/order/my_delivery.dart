@@ -25,6 +25,7 @@ class _MyDeliveryScreenState extends State<MyDeliveryScreen> {
           userID: Provider.of<AuthProvider>(context, listen: false).userID!);
       Provider.of<OrderProvider>(context, listen: false).getDelivered(
           userID: Provider.of<AuthProvider>(context, listen: false).userID!);
+      _isinit = false;
     }
     super.didChangeDependencies();
   }
@@ -63,6 +64,7 @@ class _MyDeliveryScreenState extends State<MyDeliveryScreen> {
                     return Consumer<OrderProvider>(
                       builder: (context, value, _) {
                         if (value.pendingData.isEmpty) {
+                          print(value.pendingData);
                           return Center(child: Text("No Pending Delivery"));
                         }
                         return ListView.builder(
@@ -128,10 +130,3 @@ class _MyDeliveryScreenState extends State<MyDeliveryScreen> {
         ));
   }
 }
-
-
-
-
-
-
-
